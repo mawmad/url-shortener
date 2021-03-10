@@ -1,0 +1,46 @@
+version: '3.3'
+services:
+  nginx:
+    container_name: webserver
+    image: nginx:alpine
+    volumes:
+      - ./:/var/www/html/
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    ports:
+      - "80:80"
+    restart: always
+    networks:
+      - url_shortener_network
+
+  app:
+    container_name: url_shortener_app
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./:/var/www/html/
+    working_dir: /var/www/html/
+    restart: always
+    networks:
+      - url_shortener_network
+
+  db:
+    container_name: mysql
+    image: mysql:5.7.29
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/database
+    environment:
+      - MYSQL_DATABASE=urlshortener
+      - MYSQL_USER=urlshortener
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+    restart: always
+    networks:
+      - url_shortener_network
+volumes:
+  db_data:
+
+networks:
+  url_shortener_network:
