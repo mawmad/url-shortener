@@ -14,5 +14,6 @@
 $router->get('/', function () use ($router) {
     return "Welcome to Mamad Shortener";
 });
-$router->post('/create', 'ShortenerController@store');
 $router->get('/{code}', 'ShortenerController@redirect');
+$router->post('/url', 'ShortenerController@store');
+$router->put('/url/{id}', 'ShortenerController@update');
