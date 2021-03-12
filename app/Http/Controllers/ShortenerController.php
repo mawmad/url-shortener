@@ -40,7 +40,7 @@ class ShortenerController extends Controller
         return redirect($originalLink);
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make([
             'id' => $id,
