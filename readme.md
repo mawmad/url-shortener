@@ -19,4 +19,4 @@ docker-compose up -d
 
 ## Additional info
 
-- `http://localhost` : Home Page
+- You can change short link length and expiration time in .env file.
